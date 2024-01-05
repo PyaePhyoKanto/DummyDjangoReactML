@@ -15,8 +15,6 @@ services:
     command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
-    ports:
-      - "8000:8000"
     environment:
       - DJANGO_SETTINGS_MODULE=myproject.settings
       - SECRET_KEY=${SECRET_KEY}
@@ -24,6 +22,15 @@ services:
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
     depends_on:
       - db
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx  # Specify the Dockerfile for Nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
