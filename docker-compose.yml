@@ -20,6 +20,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=myproject.settings
       - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
     depends_on:
       - db
 
