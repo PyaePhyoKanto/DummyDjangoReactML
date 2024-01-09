@@ -32,5 +32,13 @@ services:
     depends_on:
       - web
 
+  frontend:
+    build: 
+      context: ./my-react-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - web
+
 volumes:
   postgres_data:
