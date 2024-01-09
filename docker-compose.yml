@@ -29,16 +29,19 @@ services:
       dockerfile: Dockerfile.nginx  # Specify the Dockerfile for Nginx
     ports:
       - "80:80"
+    volumes:
+      - ./my-react-app/build:/app/build  # Mount React build directory
     depends_on:
       - web
+      # - frontend
 
-  frontend:
-    build: 
-      context: ./my-react-app
-    ports:
-      - "3000:3000"
-    depends_on:
-      - web
+  # frontend:
+  #   build: 
+  #     context: ./my-react-app
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - web
 
 volumes:
   postgres_data:
