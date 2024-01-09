@@ -6,7 +6,9 @@ const ItemsList = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost/api/items')
+        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}api/items`;
+        console.log(apiUrl);
+        fetch(apiUrl)
             .then(response => {
                 console.log(response);
                 if (!response.ok) {
