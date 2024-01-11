@@ -34,6 +34,19 @@ services:
       - web
       # - frontend
 
+  ml:
+    build:
+      context: ml
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  # Expose Flask app port
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+
   # frontend:
   #   build: 
   #     context: ./my-react-app
