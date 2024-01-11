@@ -1,3 +1,6 @@
+# variables
+ENV_BUCKET=env-bucket-jan24
+
 sudo apt update -y
 sudo apt upgrade -y
 
@@ -21,6 +24,10 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 # boot up project
 git clone https://github.com/PyaePhyoKanto/DummyDjangoReactML.git
 cd DummyDjangoReactML
-gsutil cp gs://env05jan24/.env .env
+gsutil cp gs://$ENV_BUCKET/.env .env
+gsutil cp gs://$ENV_BUCKET/react-env/.env my-react-app/.env
 sudo docker compose up -d --build
 sudo docker exec -it dummydjangoreactml-web-1 python manage.py migrate
+
+# react build maybe useful later
+sudo docker cp dummydjangoreactml-nginx-1:/usr/share/nginx/html react_build
