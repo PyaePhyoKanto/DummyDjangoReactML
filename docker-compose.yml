@@ -22,5 +22,18 @@ services:
     depends_on:
       - web
 
+  ml:
+    build:
+      context: ml
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  # Expose Flask app port
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+
 volumes:
   postgres_data:
