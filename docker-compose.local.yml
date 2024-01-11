@@ -1,6 +1,15 @@
 version: '3.8'
 
 services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
   web:
     build: .
     command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
@@ -9,7 +18,9 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=myproject.settings
     env_file:
-      - .env
+      - .env.dev
+    depends_on:
+      - db
 
   nginx:
     build:
@@ -21,6 +32,15 @@ services:
       - ./my-react-app/build:/app/build
     depends_on:
       - web
+      # - frontend
+
+  # frontend:
+  #   build: 
+  #     context: ./my-react-app
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - web
 
 volumes:
   postgres_data:
